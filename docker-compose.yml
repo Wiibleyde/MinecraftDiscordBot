@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  creatia-bot:
+    build: .
+    image: wiibleyde/minecraft-bot:latest
+    container_name: creatia-bot
+    restart: unless-stopped
