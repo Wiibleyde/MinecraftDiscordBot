@@ -11,28 +11,51 @@ class Minecraft:
         return self.server.status()
     
     def is_online(self):
-        if self.server.status() is None:
-            return False
-        else:
+        try:
+            if self.server.status() is None:
+                return False
             return True
+        except:
+            return False
     
     def get_players(self):
-        return self.server.status().players.online
+        try:
+            return self.server.status().players.online
+        except:
+            return -1
     
     def get_max_players(self):
-        return self.server.status().players.max
+        try:
+            return self.server.status().players.max
+        except:
+            return -1
     
     def get_motd(self):
-        return self.server.status().description
+        try:
+            return self.server.status().description
+        except:
+            return False
     
     def get_version(self):
-        return self.server.status().version.name
+        try:
+            return self.server.status().version.name
+        except:
+            return False
     
     def get_favicon(self):
-        return self.server.status().favicon
+        try:
+            return self.server.status().favicon
+        except:
+            return False
     
     def get_ping(self):
-        return self.server.ping()
+        try:
+            return self.server.ping()
+        except:
+            return -1
     
     def get_players_list(self):
-        return self.server.status().players.sample
+        try:
+            return self.server.status().players.sample
+        except:
+            return False
