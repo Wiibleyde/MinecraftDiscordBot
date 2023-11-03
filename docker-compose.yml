@@ -6,3 +6,5 @@ services:
     image: wiibleyde/minecraft-bot:latest
     container_name: creatia-bot
     restart: unless-stopped
+    volumes:
+      - ./config.yml:/app/config.yml
