@@ -33,3 +33,6 @@ class Minecraft:
     
     def get_ping(self):
         return self.server.ping()
+    
+    def get_players_list(self):
+        return self.server.status().players.sample

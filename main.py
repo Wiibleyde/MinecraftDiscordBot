@@ -22,7 +22,7 @@ async def on_ready():
         print(f"Failed to sync commands: {e}")
     print("Bot has started and all tasks are running")
 
-@bot.tree.command(name="server", description="Trouver les informations du serveur Minecraft")
+@bot.tree.command(name="status", description="Vérifier le statut du serveur Minecraft")
 async def server(ctx):
     server = Minecraft()
     faviconb64 = server.get_favicon()
@@ -72,6 +72,23 @@ async def ip(ctx):
         color=0x28a7b0
     )
     embed.add_field(name="IP", value=f"{server.config.get_minecraft_server()}:{server.config.get_minecraft_port()}")
+    embed.set_thumbnail(url="attachment://favicon.png")
+    embed.set_footer(text="Creatia - Par Zelta (Bot par Wiibleyde)")
+    await ctx.response.send_message(embed=embed, file=discord.File("favicon.png"), ephemeral=True)
+
+@bot.tree.command(name="players", description="Voir la liste des joueurs connectés")
+async def players(ctx):
+    server = Minecraft()
+    faviconb64 = server.get_favicon()
+    favicon = base64.b64decode(faviconb64.split(",")[1])
+    with open("favicon.png", "wb") as file:
+        file.write(favicon)
+    embed = discord.Embed(
+        title="Creatia", 
+        description=f"Statut du serveur: {':green_circle:' if server.is_online() else ':red_circle:'}",
+        color=0x28a7b0
+    )
+    embed.add_field(name="Joueurs connectés :", value=f"{', '.join([player.name for player in server.get_players_list()])}")
     embed.set_thumbnail(url="attachment://favicon.png")
     embed.set_footer(text="Creatia - Par Zelta (Bot par Wiibleyde)")
     await ctx.response.send_message(embed=embed, file=discord.File("favicon.png"), ephemeral=True)
