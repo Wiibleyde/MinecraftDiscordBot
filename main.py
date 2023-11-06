@@ -109,30 +109,30 @@ async def ping(ctx):
     else:
         await ctx.response.send_message(embed=embed, ephemeral=True)
     
-@bot.tree.command(name="ip", description="Trouver l'ip du serveur Minecraft")
-async def ip(ctx):
-    server = Minecraft()
-    faviconb64 = server.get_favicon()
-    faviconok = False
-    if faviconb64 is not False:
-        favicon = base64.b64decode(faviconb64.split(",")[1])
-        with open("favicon.png", "wb") as file:
-            file.write(favicon)
-        faviconok = True
-    else:
-        faviconok = False
-    embed = discord.Embed(
-        title="Creatia", 
-        description=f"Statut du serveur: {':green_circle:' if server.is_online() else ':red_circle:'}",
-        color=0x28a7b0
-    )
-    embed.add_field(name="IP", value=f"{server.config.get_minecraft_server()}:{server.config.get_minecraft_port()}")
-    if faviconok:
-        embed.set_thumbnail(url="attachment://favicon.png")
-    else:
-        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1152716446275743765/1170018815506128918/down.png")
-    embed.set_footer(text="Creatia - Par Zelta (Bot par Wiibleyde)")
-    await ctx.response.send_message(embed=embed, file=discord.File("favicon.png"), ephemeral=True)
+# @bot.tree.command(name="ip", description="Trouver l'ip du serveur Minecraft")
+# async def ip(ctx):
+#     server = Minecraft()
+#     faviconb64 = server.get_favicon()
+#     faviconok = False
+#     if faviconb64 is not False:
+#         favicon = base64.b64decode(faviconb64.split(",")[1])
+#         with open("favicon.png", "wb") as file:
+#             file.write(favicon)
+#         faviconok = True
+#     else:
+#         faviconok = False
+#     embed = discord.Embed(
+#         title="Creatia", 
+#         description=f"Statut du serveur: {':green_circle:' if server.is_online() else ':red_circle:'}",
+#         color=0x28a7b0
+#     )
+#     embed.add_field(name="IP", value=f"{server.config.get_minecraft_server()}:{server.config.get_minecraft_port()}")
+#     if faviconok:
+#         embed.set_thumbnail(url="attachment://favicon.png")
+#     else:
+#         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1152716446275743765/1170018815506128918/down.png")
+#     embed.set_footer(text="Creatia - Par Zelta (Bot par Wiibleyde)")
+#     await ctx.response.send_message(embed=embed, file=discord.File("favicon.png"), ephemeral=True)
     
 @bot.tree.command(name="players", description="Voir la liste des joueurs connectés")
 async def players(ctx):
