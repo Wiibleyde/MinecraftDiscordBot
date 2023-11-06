@@ -136,7 +136,6 @@ async def ip(ctx):
     
 @bot.tree.command(name="players", description="Voir la liste des joueurs connectés")
 async def players(ctx):
-    
     server = Minecraft()
     faviconb64 = server.get_favicon()
     faviconok = False
@@ -152,7 +151,10 @@ async def players(ctx):
         description=f"Statut du serveur: {':green_circle:' if server.is_online() else ':red_circle:'}",
         color=0x28a7b0
     )
-    embed.add_field(name="Joueurs connectés :", value=f"{', '.join([player.name for player in server.get_players_list()])}")
+    try:
+        embed.add_field(name="Joueurs connectés :", value=f"{', '.join([player.name for player in server.get_players_list()])}")
+    except:
+        embed.add_field(name="Joueurs connectés :", value=f"Aucun joueur connecté")
     if faviconok:
         embed.set_thumbnail(url="attachment://favicon.png")
     else:
