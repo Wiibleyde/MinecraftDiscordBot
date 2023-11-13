@@ -8,6 +8,10 @@ class Config:
                 "server": "",
                 "port": 25565
             },
+            "rcon": {
+                "password": "",
+                "port": 25575
+            },
             "discord": {
                 "token": "",
                 "prefix": "!",
@@ -45,6 +49,12 @@ class Config:
     def get_discord_owner(self):
         return self.config["discord"]["owner"]
     
+    def get_minecraft_rcon_password(self):
+        return self.config["rcon"]["password"]
+    
+    def get_minecraft_rcon_port(self):
+        return self.config["rcon"]["port"]
+    
     def set_minecraft_server(self, server):
         self.config["minecraft"]["server"] = server
         self.save_config()
@@ -63,6 +73,14 @@ class Config:
 
     def set_discord_owner(self, owner):
         self.config["discord"]["owner"] = owner
+        self.save_config()
+
+    def set_minecraft_rcon_password(self, password):
+        self.config["rcon"]["password"] = password
+        self.save_config()
+
+    def set_minecraft_rcon_port(self, port):
+        self.config["rcon"]["port"] = port
         self.save_config()
 
     def save_config(self):

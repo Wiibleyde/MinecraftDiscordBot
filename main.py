@@ -6,6 +6,7 @@ import base64
 
 from objects.Config import Config
 from objects.Minecraft import Minecraft
+from objects.MinecraftRcon import MinecraftRcon
 
 bot = commands.Bot(command_prefix=Config(os.path.join(os.path.dirname(__file__), "config.yml")).get_discord_prefix(), intents=discord.Intents.all())
 
@@ -161,6 +162,25 @@ async def players(ctx):
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1152716446275743765/1170018815506128918/down.png")
     embed.set_footer(text="Creatia - Par Zelta (Bot par Wiibleyde)")
     await ctx.response.send_message(embed=embed, file=discord.File("favicon.png"), ephemeral=True)
+
+@bot.tree.command(name="say", description="Faire parler le bot en jeu")
+async def say(ctx: discord.Interaction, message: str):
+    rcon = MinecraftRcon()
+    pseudo = ctx.user.display_name
+    rcon.send_command(f"tellraw @a [\"\",{{\"text\":\"<{pseudo} - Discord> {message}\",\"color\":\"blue\"}}]")
+    await ctx.response.send_message("Message envoyé", ephemeral=True)
+
+@bot.tree.command(name="cmd", description="Exécuter une commande en jeu")
+async def cmd(ctx: discord.Interaction, command: str):
+    if ctx.user.guild_permissions.administrator or ctx.user.id == 368259650136571904 or ctx.user.id == 461807010086780930:
+        rcon = MinecraftRcon()
+        rcon.send_command(command)
+        response = rcon.send_command(command)
+        if response == "":
+            response = "Aucune réponse à la commande"
+        await ctx.response.send_message(f"Commande exécutée: {response}", ephemeral=True)
+    else:
+        await ctx.response.send_message("Vous n'avez pas la permission d'exécuter cette commande", ephemeral=True)
     
 @tasks.loop(seconds=10)
 async def status():
@@ -171,6 +191,4 @@ async def status():
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Serveur éteint"))
 
 if __name__ == "__main__":
-    server1 = Minecraft()
-    print(f"Server is online: {server1.is_online()}")
     bot.run(Config(os.path.join(os.path.dirname(__file__), "config.yml")).get_discord_token())
