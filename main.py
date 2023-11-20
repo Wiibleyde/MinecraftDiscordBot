@@ -174,7 +174,6 @@ async def say(ctx: discord.Interaction, message: str):
 async def cmd(ctx: discord.Interaction, command: str):
     if ctx.user.guild_permissions.administrator or ctx.user.id == 368259650136571904 or ctx.user.id == 461807010086780930:
         rcon = MinecraftRcon()
-        rcon.send_command(command)
         response = rcon.send_command(command)
         if response == "":
             response = "Aucune réponse à la commande"
