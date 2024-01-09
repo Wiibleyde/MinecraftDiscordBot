@@ -42,7 +42,7 @@ async def server(ctx):
     server = Minecraft()
     faviconb64 = server.get_favicon()
     faviconok = False
-    if faviconb64 is not False:
+    if faviconb64 is not None:
         favicon = base64.b64decode(faviconb64.split(",")[1])
         with open("favicon.png", "wb") as file:
             file.write(favicon)
@@ -70,7 +70,7 @@ async def ping(ctx):
     server = Minecraft()
     faviconb64 = server.get_favicon()
     faviconok = False
-    if faviconb64 is not False:
+    if faviconb64 is not None:
         favicon = base64.b64decode(faviconb64.split(",")[1])
         with open("favicon.png", "wb") as file:
             file.write(favicon)
@@ -140,7 +140,7 @@ async def players(ctx):
     server = Minecraft()
     faviconb64 = server.get_favicon()
     faviconok = False
-    if faviconb64 is not False:
+    if faviconb64 is not None:
         favicon = base64.b64decode(faviconb64.split(",")[1])
         with open("favicon.png", "wb") as file:
             file.write(favicon)
